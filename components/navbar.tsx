@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { Heart } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { usePathname } from 'next/navigation'
+import Image from 'next/image'
 
 export function Navbar() {
   const pathname = usePathname()
@@ -23,14 +24,7 @@ export function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-[#f9d9ca] border-b border-white/20">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 group">
-          <div className="relative">
-            {/* Updated to always use primary color for visibility */}
-            <Heart className="w-8 h-8 fill-primary text-primary transition-colors" />
-          </div>
-          {/* Updated to always use primary color */}
-          <span className="font-playfair font-bold text-2xl text-primary transition-colors">
-            LoveVerse
-          </span>
+          <Image src="/images/love.png" alt="Logo" width={60} height={60} />
         </Link>
 
         <div className="hidden md:flex items-center gap-8">

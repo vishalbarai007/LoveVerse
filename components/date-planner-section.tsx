@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { useLoveContext } from '@/app/context/love-context'
-import { MapPin, Utensils, Music, Lightbulb, Activity, Heart, Sparkles, Palette, Mountain, Coffee, Globe, Star } from 'lucide-react'
+import { MapPin, Utensils, Music, Lightbulb, Activity, Heart, Sparkles, Palette, Mountain, Coffee, Globe, Star, Check } from 'lucide-react'
 import Link from 'next/link'
 
 const dateIdeas: Record<string, any> = {
@@ -74,10 +74,11 @@ type DateIdeaCard = {
   surpriseIdea: string
 }
 
-const categorizedIdeas: Record<string, { icon: any; color: string; ideas: DateIdeaCard[] }> = {
+const categorizedIdeas: Record<string, { icon: any; color: string; bgColor: string; ideas: DateIdeaCard[] }> = {
   '💕 Romantic': {
     icon: Heart,
-    color: 'text-rose-500',
+    color: 'text-rose-600',
+    bgColor: 'bg-rose-50',
     ideas: [
       {
         emoji: '🌅',
@@ -119,7 +120,8 @@ const categorizedIdeas: Record<string, { icon: any; color: string; ideas: DateId
   },
   '🏔️ Adventure': {
     icon: Mountain,
-    color: 'text-emerald-500',
+    color: 'text-emerald-600',
+    bgColor: 'bg-emerald-50',
     ideas: [
       {
         emoji: '🥾',
@@ -161,7 +163,8 @@ const categorizedIdeas: Record<string, { icon: any; color: string; ideas: DateId
   },
   '🎨 Creative': {
     icon: Palette,
-    color: 'text-violet-500',
+    color: 'text-violet-600',
+    bgColor: 'bg-violet-50',
     ideas: [
       {
         emoji: '🖌️',
@@ -203,7 +206,8 @@ const categorizedIdeas: Record<string, { icon: any; color: string; ideas: DateId
   },
   '☕ Chill': {
     icon: Coffee,
-    color: 'text-amber-600',
+    color: 'text-amber-700',
+    bgColor: 'bg-amber-50',
     ideas: [
       {
         emoji: '🎬',
@@ -245,7 +249,8 @@ const categorizedIdeas: Record<string, { icon: any; color: string; ideas: DateId
   },
   '🍕 Foodie': {
     icon: Utensils,
-    color: 'text-orange-500',
+    color: 'text-orange-600',
+    bgColor: 'bg-orange-50',
     ideas: [
       {
         emoji: '🌮',
@@ -287,7 +292,8 @@ const categorizedIdeas: Record<string, { icon: any; color: string; ideas: DateId
   },
   '🌍 Cultural': {
     icon: Globe,
-    color: 'text-blue-500',
+    color: 'text-blue-600',
+    bgColor: 'bg-blue-50',
     ideas: [
       {
         emoji: '🏛️',
@@ -366,21 +372,49 @@ export function DatePlannerSection() {
     document.getElementById('plan-grid')?.scrollIntoView({ behavior: 'smooth' })
   }
 
+  const iconConfigs = [
+    { icon: MapPin, color: 'text-rose-600', bg: 'bg-rose-50', label: 'Location', field: 'location' },
+    { icon: Activity, color: 'text-violet-600', bg: 'bg-violet-50', label: 'Activity', field: 'activity' },
+    { icon: Utensils, color: 'text-orange-600', bg: 'bg-orange-50', label: 'Food Suggestion', field: 'foodSuggestion' },
+    { icon: Music, color: 'text-blue-600', bg: 'bg-blue-50', label: 'Playlist Vibe', field: 'playlistVibe' },
+  ]
 
   return (
-    <section id="planner" className="py-20 bg-card">
-      <div className="container mx-auto px-4">
-        <div className="max-w-5xl mx-auto">
+    <section id="planner" className="py-24 bg-white relative overflow-hidden">
+      {/* Decorative background pattern */}
+      <div className="absolute inset-0 opacity-[0.03]" style={{
+        backgroundImage: `radial-circle(circle at 1px 1px, rgb(0 0 0) 1px, transparent 0)`,
+        backgroundSize: '40px 40px'
+      }}></div>
+      
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="max-w-6xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-12 fade-in">
-            <h2 className="font-playfair text-4xl md:text-5xl font-bold mb-4 text-foreground">Plan Your Perfect Date</h2>
+          <div className="text-center mb-16 fade-in">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-rose-50 border-2 border-rose-200 rounded-full mb-6">
+              <Heart className="w-4 h-4 text-rose-600 fill-rose-600" />
+              <span className="font-inter text-sm font-semibold text-rose-600 tracking-wide">DATE PLANNER</span>
+            </div>
+            <h2 className="font-playfair text-5xl md:text-6xl font-bold mb-6 text-foreground leading-tight">
+              Plan Your Perfect Date
+            </h2>
             {result ? (
-              <p className="font-inter text-foreground/70 text-lg">
-                Customized just for your love vibe: <span className="text-primary font-semibold">{result}</span>
-              </p>
+              <div className="flex flex-col items-center gap-3">
+                <p className="font-inter text-foreground/60 text-lg">
+                  Customized for your unique love story
+                </p>
+                <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary/10 border-2 border-primary/20 rounded-full">
+                  <Sparkles className="w-4 h-4 text-primary" />
+                  <span className="text-primary font-semibold font-inter">{result}</span>
+                </div>
+              </div>
             ) : (
-              <p className="font-inter text-foreground/70 text-lg">
-                Browse date ideas below, or <Link href="/quiz" className="text-primary font-semibold underline underline-offset-4 hover:text-primary/80">take the quiz</Link> to get a personalized plan!
+              <p className="font-inter text-foreground/60 text-lg max-w-2xl mx-auto">
+                Browse date ideas below, or{' '}
+                <Link href="/quiz" className="text-primary font-semibold hover:underline underline-offset-4">
+                  take the quiz
+                </Link>{' '}
+                to get a personalized plan!
               </p>
             )}
           </div>
@@ -388,107 +422,58 @@ export function DatePlannerSection() {
           {result && (
             <>
               {/* Plan Grid */}
-              <div id="plan-grid" className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                {/* Location */}
-                <Card className="p-6 bg-soft-white border-border rounded-2xl hover:shadow-lg transition-all duration-300 shadow-md">
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 bg-primary/10 rounded-2xl">
-                      <MapPin className="w-6 h-6 text-primary" />
+              <div id="plan-grid" className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-10">
+                {iconConfigs.map(({ icon: Icon, color, bg, label, field }) => (
+                  <Card 
+                    key={field}
+                    className={`group relative p-6 bg-white border-2 border-border/50 rounded-3xl hover:border-primary/30 transition-all duration-300 hover:shadow-xl ${
+                      field === 'activity' || field === 'playlistVibe' ? '' : ''
+                    }`}
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className={`flex-shrink-0 p-3.5 ${bg} rounded-2xl border-2 border-transparent group-hover:border-${color.split('-')[1]}-200 transition-all duration-300`}>
+                        <Icon className={`w-6 h-6 ${color}`} />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <label className="font-inter text-xs font-bold text-foreground/50 uppercase tracking-wider block mb-2.5">
+                          {label}
+                        </label>
+                        {isEditing ? (
+                          <Input
+                            value={plan[field]}
+                            onChange={(e) => handleFieldChange(field, e.target.value)}
+                            className="w-full border-2 border-primary/30 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20"
+                          />
+                        ) : (
+                          <p className="text-base font-medium text-foreground leading-relaxed">
+                            {plan[field]}
+                          </p>
+                        )}
+                      </div>
                     </div>
-                    <div className="flex-1 w-full">
-                      <label className="font-inter text-sm font-semibold text-foreground/70 block mb-2">Location</label>
-                      {isEditing ? (
-                        <Input
-                          value={plan.location}
-                          onChange={(e) => handleFieldChange('location', e.target.value)}
-                          className="w-full border-primary/30"
-                        />
-                      ) : (
-                        <p className="text-base font-medium text-foreground">{plan.location}</p>
-                      )}
-                    </div>
-                  </div>
-                </Card>
+                  </Card>
+                ))}
 
-                {/* Activity */}
-                <Card className="p-6 bg-soft-white border-border rounded-2xl hover:shadow-lg transition-all duration-300 shadow-md">
+                {/* Surprise Idea - Full Width */}
+                <Card className="group relative p-6 bg-white border-2 border-border/50 rounded-3xl hover:border-primary/30 transition-all duration-300 hover:shadow-xl md:col-span-2">
                   <div className="flex items-start gap-4">
-                    <div className="p-3 bg-secondary/10 rounded-2xl">
-                      <Activity className="w-6 h-6 text-secondary" />
+                    <div className="flex-shrink-0 p-3.5 bg-amber-50 rounded-2xl border-2 border-transparent group-hover:border-amber-200 transition-all duration-300">
+                      <Lightbulb className="w-6 h-6 text-amber-600" />
                     </div>
-                    <div className="flex-1 w-full">
-                      <label className="font-inter text-sm font-semibold text-foreground/70 block mb-2">Activity</label>
-                      {isEditing ? (
-                        <Input
-                          value={plan.activity}
-                          onChange={(e) => handleFieldChange('activity', e.target.value)}
-                          className="w-full border-primary/30"
-                        />
-                      ) : (
-                        <p className="text-base font-medium text-foreground">{plan.activity}</p>
-                      )}
-                    </div>
-                  </div>
-                </Card>
-
-                {/* Food Suggestion */}
-                <Card className="p-6 bg-soft-white border-border rounded-2xl hover:shadow-lg transition-all duration-300 shadow-md">
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 bg-accent/10 rounded-2xl">
-                      <Utensils className="w-6 h-6 text-accent" />
-                    </div>
-                    <div className="flex-1 w-full">
-                      <label className="font-inter text-sm font-semibold text-foreground/70 block mb-2">Food Suggestion</label>
-                      {isEditing ? (
-                        <Input
-                          value={plan.foodSuggestion}
-                          onChange={(e) => handleFieldChange('foodSuggestion', e.target.value)}
-                          className="w-full border-primary/30"
-                        />
-                      ) : (
-                        <p className="text-base font-medium text-foreground">{plan.foodSuggestion}</p>
-                      )}
-                    </div>
-                  </div>
-                </Card>
-
-                {/* Playlist Vibe */}
-                <Card className="p-6 bg-soft-white border-border rounded-2xl hover:shadow-lg transition-all duration-300 shadow-md">
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 bg-primary/10 rounded-2xl">
-                      <Music className="w-6 h-6 text-primary" />
-                    </div>
-                    <div className="flex-1 w-full">
-                      <label className="font-inter text-sm font-semibold text-foreground/70 block mb-2">Playlist Vibe</label>
-                      {isEditing ? (
-                        <Input
-                          value={plan.playlistVibe}
-                          onChange={(e) => handleFieldChange('playlistVibe', e.target.value)}
-                          className="w-full border-primary/30"
-                        />
-                      ) : (
-                        <p className="text-base font-medium text-foreground">{plan.playlistVibe}</p>
-                      )}
-                    </div>
-                  </div>
-                </Card>
-
-                {/* Surprise Idea */}
-                <Card className="p-6 bg-soft-white border-border rounded-2xl hover:shadow-lg transition-all duration-300 shadow-md md:col-span-2">
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 bg-accent/10 rounded-2xl">
-                      <Lightbulb className="w-6 h-6 text-accent" />
-                    </div>
-                    <div className="flex-1 w-full">
-                      <label className="font-inter text-sm font-semibold text-foreground/70 block mb-2">Small Surprise Idea</label>
+                    <div className="flex-1 min-w-0">
+                      <label className="font-inter text-xs font-bold text-foreground/50 uppercase tracking-wider block mb-2.5">
+                        Small Surprise Idea
+                      </label>
                       {isEditing ? (
                         <Input
                           value={plan.surpriseIdea}
                           onChange={(e) => handleFieldChange('surpriseIdea', e.target.value)}
-                          className="w-full border-primary/30"
+                          className="w-full border-2 border-primary/30 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20"
                         />
                       ) : (
-                        <p className="text-base font-medium text-foreground">{plan.surpriseIdea}</p>
+                        <p className="text-base font-medium text-foreground leading-relaxed">
+                          {plan.surpriseIdea}
+                        </p>
                       )}
                     </div>
                   </div>
@@ -496,18 +481,23 @@ export function DatePlannerSection() {
               </div>
 
               {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center mb-20">
                 <Button
-                  variant={isEditing ? 'default' : 'outline'}
-                  onClick={() => isEditing ? handleSavePlan() : setIsEditing(true)}
-                  className={`font-inter rounded-2xl transition-all ${isEditing ? 'bg-primary text-primary-foreground' : 'border-border text-foreground hover:bg-muted'}`}
+                  onClick={() => (isEditing ? handleSavePlan() : setIsEditing(true))}
+                  variant="outline"
+                  className="font-inter font-semibold px-8 py-6 rounded-2xl border-2 border-border hover:border-primary hover:bg-primary/5 transition-all duration-300"
                 >
-                  {isEditing ? 'Save Changes' : 'Edit Plan'}
+                  {isEditing ? (
+                    <>
+                      <Check className="w-5 h-5 mr-2" />
+                      Save Changes
+                    </>
+                  ) : (
+                    'Edit Plan'
+                  )}
                 </Button>
                 <Link href="/proposal">
-                  <Button
-                    className="font-inter bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 rounded-2xl raised-shadow btn-scale"
-                  >
+                  <Button className="font-inter font-semibold bg-primary hover:bg-primary/90 text-primary-foreground px-10 py-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5">
                     Create Proposal
                     <Heart className="ml-2 w-5 h-5 fill-current" />
                   </Button>
@@ -517,33 +507,44 @@ export function DatePlannerSection() {
           )}
 
           {/* ========== MORE DATE IDEAS ========== */}
-          <div className="border-t border-border/50 pt-16">
-            <div className="text-center mb-10 fade-in">
-              <div className="inline-block p-3 bg-primary/10 rounded-full mb-4">
-                <Sparkles className="w-8 h-8 text-primary" />
+          <div className="relative">
+            {/* Decorative line */}
+            <div className="flex items-center justify-center mb-16">
+              <div className="flex-1 h-px bg-border/30"></div>
+              <div className="px-6">
+                <div className="p-4 bg-primary/5 rounded-full border-2 border-primary/10">
+                  <Sparkles className="w-6 h-6 text-primary" />
+                </div>
               </div>
-              <h3 className="font-playfair text-3xl md:text-4xl font-bold mb-3 text-foreground">More Date Ideas</h3>
-              <p className="font-inter text-foreground/60 text-base max-w-xl mx-auto">
+              <div className="flex-1 h-px bg-border/30"></div>
+            </div>
+
+            <div className="text-center mb-12 fade-in">
+              <h3 className="font-playfair text-4xl md:text-5xl font-bold mb-4 text-foreground">
+                More Date Ideas
+              </h3>
+              <p className="font-inter text-foreground/60 text-base max-w-2xl mx-auto">
                 Browse by category and click any card to auto-fill your plan above
               </p>
             </div>
 
             {/* Category Tabs */}
-            <div className="flex flex-wrap justify-center gap-3 mb-8">
+            <div className="flex flex-wrap justify-center gap-3 mb-10">
               {Object.entries(categorizedIdeas).map(([category, data]) => {
                 const Icon = data.icon
                 const isActive = activeCategory === category
                 return (
                   <Button
                     key={category}
-                    variant={isActive ? 'default' : 'outline'}
+                    variant="outline"
                     onClick={() => setActiveCategory(isActive ? null : category)}
-                    className={`font-inter rounded-2xl px-5 py-2 transition-all duration-300 ${isActive
-                      ? 'bg-primary text-primary-foreground shadow-lg scale-105'
-                      : 'border-border text-foreground/70 hover:bg-primary/5 hover:border-primary/30'
-                      }`}
+                    className={`font-inter font-semibold rounded-2xl px-6 py-3 border-2 transition-all duration-300 ${
+                      isActive
+                        ? `bg-primary text-primary-foreground border-primary shadow-lg scale-105`
+                        : `bg-white border-border/50 text-foreground/70 hover:border-primary/40 hover:bg-primary/5`
+                    }`}
                   >
-                    <Icon className={`w-4 h-4 mr-2 ${isActive ? '' : data.color}`} />
+                    <Icon className={`w-4 h-4 mr-2 ${isActive ? 'text-primary-foreground' : data.color}`} />
                     {category}
                   </Button>
                 )
@@ -552,34 +553,50 @@ export function DatePlannerSection() {
 
             {/* Idea Cards Grid */}
             {activeCategory && categorizedIdeas[activeCategory] && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 slide-up">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 slide-up">
                 {categorizedIdeas[activeCategory].ideas.map((idea, idx) => {
                   const isSelected = selectedIdea?.title === idea.title
+                  const categoryData = categorizedIdeas[activeCategory]
                   return (
                     <Card
                       key={idx}
                       onClick={() => handleIdeaClick(idea)}
-                      className={`p-5 rounded-2xl cursor-pointer transition-all duration-300 group border-2 ${isSelected
-                        ? 'border-primary bg-primary/5 shadow-xl scale-[1.02]'
-                        : 'border-border/50 bg-soft-white hover:border-primary/40 hover:shadow-lg hover:-translate-y-1'
-                        }`}
+                      className={`group relative p-6 rounded-3xl cursor-pointer transition-all duration-300 border-2 overflow-hidden ${
+                        isSelected
+                          ? 'border-primary bg-primary/5 shadow-2xl scale-[1.02] ring-4 ring-primary/10'
+                          : 'border-border/40 bg-white hover:border-primary/50 hover:shadow-xl hover:-translate-y-1'
+                      }`}
                     >
-                      <div className="text-4xl mb-3">{idea.emoji}</div>
-                      <h4 className="font-inter font-bold text-foreground text-lg mb-1 group-hover:text-primary transition-colors">
+                      {/* Selected indicator */}
+                      {isSelected && (
+                        <div className="absolute top-4 right-4 p-1.5 bg-primary rounded-full">
+                          <Check className="w-3.5 h-3.5 text-primary-foreground" />
+                        </div>
+                      )}
+                      
+                      {/* Emoji with background */}
+                      <div className={`inline-flex items-center justify-center w-16 h-16 ${categoryData.bgColor} rounded-2xl mb-4 border-2 border-transparent group-hover:border-primary/20 transition-all`}>
+                        <span className="text-3xl">{idea.emoji}</span>
+                      </div>
+                      
+                      <h4 className="font-inter font-bold text-foreground text-xl mb-2 group-hover:text-primary transition-colors">
                         {idea.title}
                       </h4>
-                      <p className="font-inter text-foreground/60 text-sm mb-3 leading-relaxed">
+                      
+                      <p className="font-inter text-foreground/60 text-sm mb-4 leading-relaxed min-h-[2.5rem]">
                         {idea.description}
                       </p>
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs font-inter text-foreground/50 bg-muted px-2 py-1 rounded-full">
+                      
+                      <div className="flex items-center justify-between pt-3 border-t border-border/30">
+                        <span className="inline-flex items-center text-xs font-inter font-medium text-foreground/60 bg-muted px-3 py-1.5 rounded-full">
                           {idea.vibe}
                         </span>
-                        <span className="text-sm">{idea.cost}</span>
+                        <span className="text-base">{idea.cost}</span>
                       </div>
+                      
                       {isSelected && (
-                        <div className="mt-3 flex items-center gap-1 text-primary text-xs font-semibold font-inter">
-                          <Star className="w-3 h-3 fill-current" />
+                        <div className="mt-4 flex items-center gap-1.5 text-primary text-sm font-semibold font-inter bg-primary/10 px-3 py-2 rounded-xl border border-primary/20">
+                          <Star className="w-4 h-4 fill-current" />
                           Applied to your plan!
                         </div>
                       )}
@@ -591,8 +608,13 @@ export function DatePlannerSection() {
 
             {/* Show all categories collapsed hint */}
             {!activeCategory && (
-              <div className="text-center py-8 text-foreground/40 font-inter">
-                <p>👆 Tap a category above to explore date ideas</p>
+              <div className="text-center py-16">
+                <div className="inline-flex flex-col items-center gap-4 p-8 bg-muted/30 rounded-3xl border-2 border-dashed border-border/50">
+                  <div className="text-5xl opacity-40">✨</div>
+                  <p className="font-inter text-foreground/50 text-base">
+                    Select a category above to explore amazing date ideas
+                  </p>
+                </div>
               </div>
             )}
           </div>

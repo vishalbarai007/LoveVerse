@@ -12,6 +12,19 @@ body {
   }
 }
 
+@font-face {
+  font-family: 'MyFont';
+  src: url('/fonts/myFont/Cream Cake Bold.otf') format('otf');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  font-family: 'MyFont', sans-serif;
+}
+
+
 @layer base {
   :root {
     --background: 0 0% 100%;
