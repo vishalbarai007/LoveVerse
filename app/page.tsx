@@ -11,11 +11,18 @@ export default function Page() {
     <LoveProvider>
       <Navbar />
       <main className="min-h-screen">
+        
 
         <LandingHero />
       </main>
-      <div className='flex items-center justify-center  gap-8'>
-        <Image src="/images/landing.jpeg" alt="Heart" width={700} height={700} />
+      <div className='w-full'>
+        <Image
+          src="/images/landing.jpeg"
+          alt="Heart"
+          width={1920} // Increased width for better resolution on large screens
+          height={500}
+          className="w-full h-screen object-cover"
+        />
       </div>
       <Footer />
     </LoveProvider>
