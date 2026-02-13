@@ -1,0 +1,312 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  position: relative;
+  background: linear-gradient(135deg, hsl(340, 55%, 48%), hsl(30, 60%, 92%));
+  background-attachment: fixed;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="2"/><feColorMatrix type="saturate" values="0.3"/></filter><rect width="100" height="100" filter="url(%23noise)" opacity="0.05"/></svg>');
+  z-index: 1;
+  mix-blend-mode: multiply;
+}
+
+main, section, .content {
+  position: relative;
+  z-index: 2;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
+  }
+  .shimmer {
+    animation: shimmer 2s infinite;
+  }
+  .float {
+    animation: float 3s ease-in-out infinite;
+  }
+  .pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+  .fade-in {
+    animation: fade-in 0.6s ease-out;
+  }
+  .slide-up {
+    animation: slide-up 0.6s ease-out;
+  }
+  .raised-shadow {
+    @apply shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+  }
+  .subtle-hover {
+    @apply transition-all duration-300 hover:opacity-80;
+  }
+  .sparkle {
+    animation: sparkle 2s ease-in-out infinite;
+  }
+  .petal-fall {
+    animation: petal-fall 4s ease-in infinite;
+  }
+  .bounce-in {
+    animation: bounce-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .spotlight {
+    animation: spotlight 2s ease-in-out infinite;
+  }
+  .parallax {
+    animation: parallax 20s ease-in-out infinite;
+  }
+  .btn-scale {
+    @apply transition-transform duration-300 hover:scale-105;
+  }
+  .smooth-highlight {
+    @apply transition-all duration-300;
+  }
+  .pulse-soft {
+    animation: pulse-soft 2s ease-in-out infinite;
+  }
+}
+
+@keyframes shimmer {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(190, 50, 90, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(190, 50, 90, 0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes petal-fall {
+  0% {
+    opacity: 1;
+    transform: translateY(-10px) translateX(0) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(100vh) translateX(100px) rotate(360deg);
+  }
+}
+
+@keyframes bounce-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes spotlight {
+  0%, 100% {
+    text-shadow: 0 0 10px rgba(190, 50, 90, 0.3), 0 0 20px rgba(220, 80, 120, 0.2);
+  }
+  50% {
+    text-shadow: 0 0 20px rgba(190, 50, 90, 0.6), 0 0 40px rgba(220, 80, 120, 0.4);
+  }
+}
+
+@keyframes parallax {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes pulse-soft {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes blob {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+}
+
+.animate-blob {
+  animation: blob 7s infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+.animation-delay-150 {
+  animation-delay: 150ms;
+}
+
+@layer base {
+  :root {
+    /* Main color palette */
+    --dusty-rose: 340 55% 48%;
+    --cream: 30 60% 95%;
+    --deep-rose: 340 65% 47%;
+    --warm-plum: 320 40% 35%;
+    --deep-wine: 340 35% 20%;
+    --soft-white: 30 100% 98%;
+    --gold-accent: 38 80% 65%;
+    
+    /* Design tokens */
+    --background: 350 40% 50%;
+    --foreground: 340 35% 20%;
+    --card: 30 60% 95%;
+    --card-foreground: 340 35% 20%;
+    --popover: 30 100% 98%;
+    --popover-foreground: 340 35% 20%;
+    --primary: 340 65% 47%;
+    --primary-foreground: 30 100% 98%;
+    --secondary: 320 40% 35%;
+    --secondary-foreground: 30 100% 98%;
+    --muted: 30 50% 92%;
+    --muted-foreground: 340 25% 40%;
+    --accent: 38 80% 65%;
+    --accent-foreground: 340 35% 20%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 30 40% 88%;
+    --input: 30 100% 98%;
+    --ring: 340 65% 47%;
+    --chart-1: 340 65% 47%;
+    --chart-2: 320 40% 35%;
+    --chart-3: 38 80% 65%;
+    --chart-4: 30 60% 95%;
+    --chart-5: 340 35% 20%;
+    --radius: 1rem;
+    --sidebar-background: 30 60% 95%;
+    --sidebar-foreground: 340 35% 20%;
+    --sidebar-primary: 340 65% 47%;
+    --sidebar-primary-foreground: 30 100% 98%;
+    --sidebar-accent: 38 80% 65%;
+    --sidebar-accent-foreground: 340 35% 20%;
+    --sidebar-border: 30 40% 88%;
+    --sidebar-ring: 340 65% 47%;
+  }
+  .dark {
+    --background: 340 30% 15%;
+    --foreground: 30 100% 98%;
+    --card: 340 35% 22%;
+    --card-foreground: 30 100% 98%;
+    --popover: 340 30% 18%;
+    --popover-foreground: 30 100% 98%;
+    --primary: 340 60% 55%;
+    --primary-foreground: 340 30% 15%;
+    --secondary: 30 60% 92%;
+    --secondary-foreground: 340 30% 15%;
+    --muted: 340 20% 28%;
+    --muted-foreground: 30 50% 85%;
+    --accent: 38 75% 60%;
+    --accent-foreground: 340 30% 15%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 340 25% 28%;
+    --input: 340 30% 20%;
+    --ring: 340 60% 55%;
+    --chart-1: 340 60% 55%;
+    --chart-2: 30 60% 92%;
+    --chart-3: 38 75% 60%;
+    --chart-4: 340 35% 22%;
+    --chart-5: 30 100% 98%;
+    --sidebar-background: 340 30% 15%;
+    --sidebar-foreground: 30 100% 98%;
+    --sidebar-primary: 340 60% 55%;
+    --sidebar-primary-foreground: 340 30% 15%;
+    --sidebar-accent: 38 75% 60%;
+    --sidebar-accent-foreground: 340 30% 15%;
+    --sidebar-border: 340 25% 28%;
+    --sidebar-ring: 340 60% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
