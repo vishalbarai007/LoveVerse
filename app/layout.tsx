@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
       <body className="font-inter antialiased bg-background text-foreground">
-        {/* <SplashScreen /> */}
+        <SplashScreen />
         {children}
       </body>
     </html>
